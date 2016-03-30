@@ -1,0 +1,16 @@
+# Build artefacts
+[Bb]uild
+
+# Auto-completition files
+tags
+# Include config itself
+#.ycm_extra_conf.py
+.ycm_extra_conf.pyc
+
+# Vim stuff
+#_vimrc_local.vim
+*.swp
+
+# perf stuff
+perf.data
+perf.data.old
