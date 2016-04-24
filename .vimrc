@@ -18,6 +18,9 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'LucHermitte/lh-vim-lib'
 Plugin 'LucHermitte/local_vimrc'
 Plugin 'rking/ag.vim'
+Plugin 'cespare/vim-toml'
+Plugin 'vim-scripts/cg.vim'
+Plugin 'vim-scripts/ShaderHighLight'
 
 Plugin 'Valloric/YouCompleteMe'
 
@@ -37,7 +40,7 @@ colors solarized
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_error_symbol = '!!'
 let g:ycm_warning_symbol = '??'
-set completeopt-=preview
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " Basic editing
 set hidden
@@ -46,8 +49,10 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 set number
+set relativenumber
 set nowrap
 set backspace=indent,eol,start
+set scrolloff=3
 
 if has("gui_running")
   set encoding=utf8
@@ -57,6 +62,13 @@ if has("gui_running")
   set guioptions-=L
   set guifont=Hack:h11:cRUSSIAN
 endif
+
+" Stuff for Russian
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
+set spelllang=ru_ru,en_us
 
 " No. Fucking. Beeping.
 set noerrorbells visualbell t_vb=
@@ -74,8 +86,12 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <silent> <leader>h :noh<CR>
 nnoremap <silent> <leader>l :set cursorline! cursorline?<CR>
-nnoremap <silent> <leader>e :set relativenumber! relativenumber?<CR>
+nnoremap <silent> <leader>e :Explore<CR>
 nnoremap <silent> <leader>s :set invspell<CR>
+
+nnoremap <silent> <leader>d :YcmCompleter GoTo<CR>
+nnoremap <silent> <leader>D :YcmDiags<CR>
+nnoremap <silent> <leader>c :YcmForceCompileAndDiagnostics<CR>
 
 nnoremap <silent> <leader>w :wa<CR>
 nnoremap <silent> <leader>q :qa<CR>
@@ -93,8 +109,7 @@ nnoremap <silent> <leader>n :cn<CR>
 nnoremap <silent> <leader>p :cN<CR>
 
 nnoremap <leader>o :CtrlP<CR>
-nnoremap ; :
-nnoremap <silent>v :e $MYVIMRC<CR>
+nnoremap <leader>v :e $MYVIMRC<CR>
 
 " Reselect after indent so it can easily be repeated
 vnoremap < <gv
@@ -153,9 +168,12 @@ let g:airline_powerline_fonts = 1
 
 " ag
 if (executable('ag'))
+  " let g:ctrlp_user_command = 'ag -l --nocolor 
+  "   \ --csharp --cc --cpp --batch --shell --js --json 
+  "   \ --make --objc --objcpp --python --sql --xml --yaml 
+  "   \ --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store 
+  "   \ -g "" %s'
   let g:ctrlp_user_command = 'ag -l --nocolor 
-    \ --csharp --cc --cpp --batch --shell --js --json 
-    \ --make --objc --objcpp --python --sql --xml --yaml 
-    \ --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store 
+    \ --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore *.meta
     \ -g "" %s'
 endif
